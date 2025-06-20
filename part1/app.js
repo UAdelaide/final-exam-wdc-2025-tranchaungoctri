@@ -72,6 +72,10 @@ async function initDb() {
   }
 }
 
+app.get('/', (req, res) => {
+    res.send('Welcome to the DogWalkService Final Exam');
+  });
+
 app.get('/api/dogs', async (req, res) => {
   try {
     const [rows] = await db.query(`
