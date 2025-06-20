@@ -10,19 +10,91 @@
 <body class="bg-light">
   <div id="app" class="container py-5" style="max-width: 400px;">
     <h1 class="mb-4 text-primary">Login</h1>
-    <form @submit.prevent
-    <a href="owner-dashboard.html" class="btn btn-outline-primary me-2">Owner Dashboard</a>
-    <a href="walker-dashboard.html" class="btn btn-outline-success">Walker Dashboard</a>
+    <form @submit.prevent="login">
+      <div class="mb-3">
+        <label for="email" class="form-label">Email address</label>
+        <input
+          v-model="email"
+          type="email"
+          class="form-control"
+          id="email"
+          placeholder="Enter email"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input
+          v-model="password"
+          type="password"
+          class="form-control"
+          id="password"
+          placeholder="Password"
+          required
+        />
+      </div>
+      <button type="submit" class="btn btn-primary w-100">Login</button>
+    </form>
+
+    <div v-if="error" class="alert alert-danger mt-3">{{ error }}</div>
   </div>
 
   <script>
-    const { createApp } = Vue;
+    const { createApp, ref, onMounted } = Vue;
+
     createApp({
-      data() {
-        return {
-          message: 'Welcome to the Dog Walking Service!'
-        };
-      }
+      setup() {
+        const email = ref('');
+        const password = ref('');
+        const error = ref('');
+
+        // Redirect if already logged in
+        onMounted(async () => {
+          try {
+            const res = await fetch('/api/users/me');
+            if (res.ok) {
+              const user = await res.json();
+              if (user.role === 'owner') {
+                window.location.href = 'owner-dashboard.html';
+              } else if (user.role === 'walker') {
+                window.location.href = 'walker-dashboard.html';
+              }
+            }
+          } catch {
+            // Not logged in, no action needed
+          }
+        });
+
+        async function login() {
+          error.value = '';
+          try {
+            const res = await fetch('/api/users/login', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                email: email.value,
+                password: password.value,
+              }),
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+              throw new Error(data.error || 'Login failed');
+            }
+
+            if (data.user.role === 'owner') {
+              window.location.href = 'owner-dashboard.html';
+            } else if (data.user.role === 'walker') {
+              window.location.href = 'walker-dashboard.html';
+            }
+          } catch (err) {
+            error.value = err.message;
+          }
+        }
+
+        return { email, password, error, login };
+      },
     }).mount('#app');
   </script>
 
