@@ -17,10 +17,10 @@ router.post('/register', async (req, res) => {
   const { username, email, password, role } = req.body;
 
   try {
-    const [result] = await db.query(
+    const [result] = await db.query(`
       INSERT INTO Users (username, email, password_hash, role)
       VALUES (?, ?, ?, ?)
-    , [username, email, password, role]);
+    `, [username, email, password, role]);
 
     res.status(201).json({ message: 'User registered', user_id: result.insertId });
   } catch (error) {
@@ -35,38 +35,24 @@ router.get('/me', (req, res) => {
   res.json(req.session.user);
 });
 
-router.get('/me', (req, res) => {
-  if (!req.session.user) {
-    return res.status(401).json({ error: 'Not logged in' });
-  }
-  res.json(req.session.user);
-});
-
 // POST login (dummy version)
-// POST login (fix: store session)
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
   try {
     const [rows] = await db.query(`
-      SELECT user_id, username, role FROM Users WHERE email = ? AND password_hash = ?`, [email, password]);
+      SELECT user_id, username, role FROM Users
+      WHERE email = ? AND password_hash = ?
+    `, [email, password]);
 
     if (rows.length === 0) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
-    // Save user info in session
-    req.session.user = {
-      id: rows[0].user_id,
-      username: rows[0].username,
-      role: rows[0].role
-    };
-
-    res.json({ message: 'Login successful', user: req.session.user });
+    res.json({ message: 'Login successful', user: rows[0] });
   } catch (error) {
     res.status(500).json({ error: 'Login failed' });
   }
 });
-
 
 module.exports = router;
