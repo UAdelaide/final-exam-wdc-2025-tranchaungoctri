@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dog Walking Service - Dog of the Day</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <style>
+    /* Poor contrast color */
+    body {
+      background-color: #fff;
+      color: #eee; /* very light on white */
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+    }
+    /* Tiny clickable button */
+    button {
+      font-size: 8px;
+      padding: 2px 4px;
+      margin: 10px;
+    }
+    /* Distracting animation */
+    .animated {
+      animation: flash 1s infinite;
+    }
+    @keyframes flash {
+      0% {opacity: 1;}
+      50% {opacity: 0.3;}
+      100% {opacity: 1;}
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <h1 class="animated">Dog Walking Service</h1>
+
+    <!-- Dog of the day with no alt text -->
+    <img :src="dogImage" width="200" height="200" />
+
+    <!-- Confusing text with lots of jargon -->
+    <p>Please attend to the quadruped canine exhibiting exceptional fur density and unprecedented affability for today's excursion.</p>
+
+    <!-- Small button with poor hit target -->
+    <button @click="refreshDog">Refresh Dog of Day</button>
+
+    <!-- Tiny and confusing navigation -->
+    <nav aria-label="Site navigation">
+      <a href="#" style="font-size: 6px;">Home</a> |
+      <a href="#" style="font-size: 6px;">Dog Info</a> |
+      <a href="#" style="font-size: 6px;">Contact</a>
+    </nav>
+  </div>
+
+  <script>
+    const { createApp, ref } = Vue;
+
+    createApp({
+      setup() {
+        const dogImage = ref('https://images.dog.ceo/breeds/hound-afghan/n02088094_1003.jpg');
+
+        async function refreshDog() {
+          try {
+            const res = await fetch('https://dog.ceo/api/breeds/image/random');
+            const data = await res.json();
+            dogImage.value = data.message;
+          } catch (e) {
+            alert('Failed to load new dog image!');
+          }
+        }
+
+        return { dogImage, refreshDog };
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>
