@@ -44,18 +44,19 @@
           message: 'Welcome to the Dog Walking Service!'
         };
       },
-      
+
       setup() {
         const username = ref('');
         const password = ref('');
         const error = ref('');
 
-        // Redirect after user logged in
+        // Check if user is already logged in on page load
         onMounted(async () => {
           try {
             const res = await fetch('/api/users/me');
             if (res.ok) {
               const user = await res.json();
+              // Redirect based on user role if logged in
               if (user.role === 'owner') {
                 window.location.href = 'owner-dashboard.html';
               } else if (user.role === 'walker') {
