@@ -50,7 +50,7 @@
         const password = ref('');
         const error = ref('');
 
-        // Check if user is already logged in on page load
+        // Check if user is already logged in on page load (session)
         onMounted(async () => {
           try {
             const res = await fetch('/api/users/me');
