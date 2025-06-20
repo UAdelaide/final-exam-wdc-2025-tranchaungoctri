@@ -12,12 +12,12 @@
     <h1 class="mb-4 text-primary">{{ message }}</h1>
     <form @submit.prevent="login">
       <div class="mb-3">
-        <label for="username" class="form-label">Username</label>
+        <label for="email" class="form-label">Username</label>
         <input
-          v-model="username"
+          v-model="email"
           type="text"
           class="form-control"
-          id="username"
+          id="email"
           required
         />
       </div>
@@ -75,7 +75,7 @@
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
-                : username.value,
+                email: email.value,
                 password: password.value,
               }),
             });
