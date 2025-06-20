@@ -47,7 +47,7 @@
         };
       },
       setup() {
-        const username = ref('');
+        const email = ref('');
         const password = ref('');
         const error = ref('');
 
@@ -75,7 +75,7 @@
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
-                username: username.value,
+                : username.value,
                 password: password.value,
               }),
             });
@@ -96,7 +96,7 @@
           }
         }
 
-        return { username, password, error, login };
+        return { email, password, error, login };
       },
     }).mount('#app');
   </script>
