@@ -24,8 +24,7 @@ router.post('/register', async (req, res) => {
     res.status(201).json({ message: 'User registered', user_id: result.insertId });
   } catch (error) {
     res.status(500).json({ error: 'Registration failed' });
-  }
-);
+  };
 
 router.get('/me', (req, res) => {
   if (!req.session.user) {
