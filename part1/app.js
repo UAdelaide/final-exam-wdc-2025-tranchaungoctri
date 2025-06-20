@@ -14,19 +14,22 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 let db;
 
-async function initDb() {
-  db = await mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'your_password',
-    database: 'DogWalkService'
-  });
+(async () => {
+    try {
+      const connection = await mysql.createConnection({
+        host: 'localhost',
+        user: 'root',
+        password: ''
+      });
+      await connection.query('CREATE DATABASE IF NOT EXISTS DogWalkService');
+      await connection.end();
 
-  const [users] = await db.query('SELECT COUNT(*) AS count FROM Users');
-  if (users[0].count === 0) {
-    await insertTestData();
-  }
-}
+      db = await mysql.createConnection({
+        host: 'localhost',
+        user: 'root',
+        password: '',
+        database: 'DogWalkService'
+      });
 
 async function insertTestData() {
   try {
