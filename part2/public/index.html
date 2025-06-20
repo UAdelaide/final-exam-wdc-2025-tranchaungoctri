@@ -14,7 +14,7 @@
       <div class="mb-3">
         <label for="email" class="form-label">Email</label>
         <label for="username" class="form-label">Username</label>
-<input v-model="username" type="text" class="form-control" id="username" required>
+        <input v-model="username" type="text" class="form-control" id="username" required>
       </div>
       <div class="mb-3">
         <label for="password" class="form-label">Password</label>
@@ -42,7 +42,7 @@
         };
       },
       setup() {
-        const email = ref('');
+        const username = ref('');
         const password = ref('');
         const error = ref('');
 
