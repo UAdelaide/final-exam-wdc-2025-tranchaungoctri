@@ -37,7 +37,7 @@ router.get('/me', (req, res) => {
 
 // POST login (dummy version)
 router.post('/login', async (req, res) => {
-  const { email, password } = req.body;
+  const { username, password } = req.body;
 
   try {
     const [rows] = await db.query(`
@@ -50,7 +50,7 @@ router.post('/login', async (req, res) => {
     }
 
     // Save user info in session after login
-    
+
 
     res.json({ message: 'Login successful', user: rows[0] });
   } catch (error) {
