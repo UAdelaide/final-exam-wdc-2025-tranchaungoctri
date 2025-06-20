@@ -14,17 +14,19 @@ router.get('/', async (req, res) => {
 
 // POST a new user (simple signup)
 router.post('/register', async (req, res) => {
-  const { username, password } = req.body;
+  const { username, email, password, role } = req.body;
 
-  const [rows] = await db.query(`
-    SELECT user_id, username, role FROM Users
-    WHERE username = ? AND password_hash = ?
-  `, [username, password]);
+  try {
+    const [result] = await db.query(`
+      INSERT INTO Users (username, email, password_hash, role)
+      VALUES (?, ?, ?, ?)
+    `, [username, email, password, role]);
 
     res.status(201).json({ message: 'User registered', user_id: result.insertId });
   } catch (error) {
     res.status(500).json({ error: 'Registration failed' });
-  };
+  }
+});
 
 router.get('/me', (req, res) => {
   if (!req.session.user) {
@@ -48,11 +50,7 @@ router.post('/login', async (req, res) => {
     }
 
     // Save user info in session after login
-    req.session.user = {
-      id: rows[0].user_id,
-      username: rows[0].username,
-      role: rows[0].role
-    };
+    
 
     res.json({ message: 'Login successful', user: rows[0] });
   } catch (error) {
