@@ -18,6 +18,9 @@ app.use('/api/walks', walkRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/login', authRoutes);
 
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '/public/index.html'));
+  });
 
 // Export the app instead of listening here
 module.exports = app;
