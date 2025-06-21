@@ -71,7 +71,7 @@ router.post('/logout', (req, res) => {
     }
     // Clear cookie data
     res.clearCookie('connect.sid', { path: '/' });
-    console.log('Session destroyed and cookie cleared');
+    console.log('Session destroyed and cookie cleared'); // debug
     res.json({ message: 'Logged out successfully' });
   });
 });
