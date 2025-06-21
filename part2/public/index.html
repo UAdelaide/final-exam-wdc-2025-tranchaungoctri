@@ -79,7 +79,6 @@
         const password = ref('');
         const error = ref('');
         const dogs = ref([]);
-        const loggedIn = ref(false);
 
         // Function to fetch random dog image from Dog CEO API
         async function getRandomDogImage() {
@@ -166,7 +165,6 @@
             error.value = err.message;
           }
         }
-
 
         onMounted(loadDogs);
 
