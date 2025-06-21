@@ -98,23 +98,12 @@ router.get('/dogs', async (req, res) => {
       FROM Dogs
       JOIN Users ON Dogs.owner_id = Users.user_id
     `);
-
-    const dogsWithPhotos = await Promise.all(rows.map(async (dog) => {
-      try {
-        const imgRes = await axios.get('https://dog.ceo/api/breeds/image/random');
-        return { ...dog, image: imgRes.data.message };
-      } catch (err) {
-        console.error('Image fetch failed for dog:', dog.dog_name, err.message);
-        return { ...dog, image: null };
-      }
-    }));
-
-    res.json(dogsWithPhotos);
+    // Just send data, no photos
+    res.json(rows);
   } catch (err) {
     console.error('Error loading dogs:', err);
     res.status(500).json({ error: 'Failed to fetch dogs' });
   }
 });
-
 
 module.exports = router;
