@@ -77,19 +77,24 @@ router.post('/logout', (req, res) => {
 });
 
 // GET dog by owner
-router.get('/dogs/mine', (req, res) => {
+router.get('/dogs/mine', async (req, res) => {
   if (!req.session.user || req.session.user.role !== 'owner') {
     return res.status(403).json({ error: 'Not authorized' });
   }
-  console.log('Logged in user:', req.session.user); // debug
+
+  console.log('Logged in user:', req.session.user);  // <--- Add this
+
   const ownerId = req.session.user.id;
 
-  db.query('SELECT dog_id, name FROM Dogs WHERE owner_id = ?', [ownerId])
-    .then(([rows]) => res.json(rows))
-    .catch((err) => {
-      console.error('Error fetching dogs:', err);
-      res.status(500).json({ error: 'Could not fetch dogs' });
-    });
+  try {
+    const [rows] = await db.query('SELECT dog_id, name FROM Dogs WHERE owner_id = ?', [ownerId]);
+    console.log('Dogs found:', rows);  // <--- Add this
+    res.json(rows);
+  } catch (err) {
+    console.error('Error fetching dogs:', err);
+    res.status(500).json({ error: 'Could not fetch dogs' });
+  }
 });
+
 
 module.exports = router;
