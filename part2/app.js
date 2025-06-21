@@ -17,6 +17,7 @@ app.use(session({
     cookie: { maxAge: 86400000 } // expiration time: 1 day
   }));
 
+
 // Routes
 const walkRoutes = require('./routes/walkRoutes');
 const userRoutes = require('./routes/userRoutes');
