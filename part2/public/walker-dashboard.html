@@ -78,6 +78,21 @@
           }
         }
 
+        //get current user function
+        async function getCurrentUser() {
+        try {
+          const res = await fetch('/api/users/me', {
+            credentials: 'include'  // send session cookie
+          });
+          if (!res.ok) throw new Error('Not logged in');
+          return await res.json();
+        } catch (err) {
+          error.value = err.message;
+          return null;
+        }
+      }
+
+
         // log out function
         async function logout() {
         try {
