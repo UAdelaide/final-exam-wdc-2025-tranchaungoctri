@@ -107,7 +107,11 @@
       }
 
         onMounted(() => {
-          loadWalkRequests();
+          const currentUser = await getCurrentUser();
+          if (currentUser) {
+            user.value = currentUser.id;
+            await loadWalkRequests();
+          }
         });
 
         return {
