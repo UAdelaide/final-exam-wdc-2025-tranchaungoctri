@@ -134,7 +134,8 @@
         try {
           // fetch the list of dogs from backend API
           const res = await fetch('/api/users/dogs');
-          
+
+          // Parse JSON into
           const dogsData = await res.json();
 
           const dogsWithImages = await Promise.all(dogsData.map(async (dog) => {
