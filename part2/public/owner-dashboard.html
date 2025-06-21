@@ -146,9 +146,10 @@
 
         async function loadMyDogs() {
         try {
-          const res = await fetch('/api/dogs/mine', {
-            credentials: 'include'  // required for session cookie
-          });
+          const res = await fetch('/api/users/dogs/mine', {
+          credentials: 'include'
+        });
+
 
           if (!res.ok) {
             const errData = await res.json();
