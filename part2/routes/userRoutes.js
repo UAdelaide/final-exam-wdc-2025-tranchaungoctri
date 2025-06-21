@@ -98,7 +98,6 @@ router.get('/dogs', async (req, res) => {
       FROM Dogs
       JOIN Users ON Dogs.owner_id = Users.user_id
     `);
-    // Just send data, no photos
     res.json(rows);
   } catch (err) {
     console.error('Error loading dogs:', err);
