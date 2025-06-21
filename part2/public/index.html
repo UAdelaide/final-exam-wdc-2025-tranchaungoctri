@@ -131,23 +131,23 @@
 
         //Load dog function (for login page)
         async function loadDogs() {
-  try {
-    const res = await fetch('/api/users/dogs');
-    if (!res.ok) {
-      const data = await res.json();
-      throw new Error(data.error || 'Failed to load dogs');
-    }
-    const dogsData = await res.json();
+        try {
+          const res = await fetch('/api/users/dogs');
+          if (!res.ok) {
+            const data = await res.json();
+            throw new Error(data.error || 'Failed to load dogs');
+          }
+          const dogsData = await res.json();
 
-    // Assign a random dog photo URL per dog from dog.ceo API
-    dogs.value = dogsData.map(dog => ({
-      ...dog,
-      image: `https://dog.ceo/api/breeds/image/random?${Math.random()}` // Cache busting query param to prevent browser caching the same image
-    }));
-  } catch (err) {
-    error.value = err.message;
-  }
-}
+          // Assign a random dog photo
+          dogs.value = dogsData.map(dog => ({
+            ...dog,
+            image: `https://dog.ceo/api/breeds/image/random?${Math.random()}`
+          }));
+        } catch (err) {
+          error.value = err.message;
+        }
+      }
 
 
         onMounted(loadDogs);
