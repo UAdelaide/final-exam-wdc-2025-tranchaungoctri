@@ -143,7 +143,7 @@
       }
         // Load dog function
         const myDogs = ref([]);
-
+        
         async function loadMyDogs() {
           try {
             const res = await fetch('/api/dogs/mine', { credentials: 'include' });
