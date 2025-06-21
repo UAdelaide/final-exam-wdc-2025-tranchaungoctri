@@ -107,7 +107,7 @@ async function loadDogs() {
           const imgRes = await fetch('https://dog.ceo/api/breeds/image/random');
           if (!imgRes.ok) throw new Error('Failed to fetch dog image');
           const imgData = await imgRes.json();
-          return { ...dog, image: imgData.message }; // message contains the image URL
+          return { ...dog, image: imgData.message };
         } catch {
           return { ...dog, image: 'https://via.placeholder.com/100x80?text=No+Image' };
         }
