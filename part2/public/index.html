@@ -87,13 +87,14 @@
             if (!res.ok) {
               throw new Error(data.error || 'Login failed');
             }
-            
+            if (res.ok) {
+              alert(data.message)
             // Redirect user to dashboard based on user's role
             if (data.user.role === 'owner') {
               window.location.href = 'owner-dashboard.html';
             } else if (data.user.role === 'walker') {
               window.location.href = 'walker-dashboard.html';
-            }
+            }}
           } catch (err) {
             error.value = err.message;
           }
