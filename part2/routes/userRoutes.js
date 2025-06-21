@@ -90,9 +90,9 @@ router.get('/dogs/mine', async (req, res) => {
   }
 });
 
-// display table with dog
 // GET all dogs with random image
 router.get('/', async (req, res) => {
+  //
   try {
     const [rows] = await db.query(`
       SELECT Dogs.name AS dog_name, Dogs.size, Users.username AS owner_username
