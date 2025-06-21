@@ -106,14 +106,12 @@
         }
       }
 
-        onMounted(async () => {
-        const currentUser = await getCurrentUser();
-        if (currentUser) {
-          user.value = currentUser.id;
-          await loadWalkRequests();
-        } else {
-          error.value = 'Please log in first.';
-        }
+      onMounted(async () => {
+      const currentUser = await getCurrentUser();
+      if (currentUser) {
+        user.value = currentUser.id;
+        await loadWalkRequests();
+      }
       });
 
         return {
