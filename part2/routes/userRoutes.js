@@ -62,7 +62,8 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// POST log out
+// POST log out (ends session and erases cookie)
+
 
 
 module.exports = router;
