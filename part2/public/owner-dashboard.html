@@ -150,12 +150,6 @@
           credentials: 'include'
         });
 
-
-          if (!res.ok) {
-            const errData = await res.json();
-            throw new Error(errData.error || 'Error loading dogs');
-          }
-
           myDogs.value = await res.json();
         } catch (err) {
           error.value = 'Failed to load dogs';
