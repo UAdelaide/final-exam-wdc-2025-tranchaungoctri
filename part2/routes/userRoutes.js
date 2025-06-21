@@ -64,12 +64,12 @@ router.post('/login', async (req, res) => {
 
 // POST log out (ends session and erases cookie, return to login form)
 router.post('/logout', (req, res) => {
-  // Destroy the session data on the server
+  // End session
   req.session.destroy((err) => {
     if (err) {
       return res.status(500).json({ error: 'Logout failed' });
     }
-    // Clear the session cookie on the client
+    // Clear cookies
     res.clearCookie('connect.sid'); // Default cookie name used by express-session
     res.json({ message: 'Logged out successfully' });
   });
