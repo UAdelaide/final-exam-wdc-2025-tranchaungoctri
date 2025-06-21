@@ -34,6 +34,7 @@
     <!-- Error message -->
     <div v-if="error" class="error-noti">{{ error }}</div>
   </div>
+  
 
   <script>
     const { createApp, ref, onMounted } = Vue;
@@ -87,7 +88,7 @@
             if (!res.ok) {
               throw new Error(data.error || 'Login failed');
             }
-            
+
             // Redirect user to dashboard based on user's role
             if (data.user.role === 'owner') {
               window.location.href = 'owner-dashboard.html';
