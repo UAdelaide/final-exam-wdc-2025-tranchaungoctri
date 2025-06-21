@@ -139,11 +139,23 @@
           }
           const dogsData = await res.json();
 
-          // Assign a random dog photo
-          dogs.value = dogsData.map(dog => ({
-            ...dog,
-            image: `https://dog.ceo/api/breeds/image/random?${Math.random()}`
+          const dogsWithImages = await Promise.all(dogsData.map(async (dog) => {
+            try {
+              const imgRes = await fetch('https://dog.ceo/api/breeds/image/random');
+              const imgData = await imgRes.json();
+              return {
+                ...dog,
+                image: imgData.message
+              };
+            } catch {
+              return {
+                ...dog,
+                image: null
+              };
+            }
           }));
+
+          dogs.value = dogsWithImages;
         } catch (err) {
           error.value = err.message;
         }
