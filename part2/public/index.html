@@ -49,7 +49,7 @@
             <td>{{ dog.dog_id }}</td>
             <td>{{ dog.dog_name }}</td>
             <td>{{ dog.size }}</td>
-            <td>{{ dog.owner_username }}</td>
+            <td>{{ <dog class="owner_id"></dog> }}</td>
             <td>
               <img :src="dog.image || 'https://via.placeholder.com/100x80?text=No+Image'"
                    alt="Dog photo" class="img-fluid rounded" style="max-height: 80px;">
