@@ -81,7 +81,7 @@ router.get('/dogs/mine', (req, res) => {
   if (!req.session.user || req.session.user.role !== 'owner') {
     return res.status(403).json({ error: 'Not authorized' });
   }
-
+  console.log('Logged in user:', req.session.user); // debug
   const ownerId = req.session.user.id;
 
   db.query('SELECT dog_id, name FROM Dogs WHERE owner_id = ?', [ownerId])
