@@ -78,12 +78,14 @@
           }
         }
 
+        // log out function
         async function logout() {
         try {
           await fetch('/api/users/logout', {
             method: 'POST',
-            credentials: 'include' // Send session cookie
+            credentials: 'include' // send session cookie
           });
+          // Redirect to login after logout
           window.location.href = 'index.html'; // Redirect to login after logout
         } catch (err) {
           alert('Logout failed');
