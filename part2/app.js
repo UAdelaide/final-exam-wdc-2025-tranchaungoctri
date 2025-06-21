@@ -14,7 +14,8 @@ app.use(session({
     secret: process.env.SESSION_SECRET || 'password',
     resave: false,
     saveUninitialized: false, // avoid storing empty session
-    cookie: { maxAge: 86400000 } // expiration time: 1 day
+    cookie: { maxAge: 86400000 }, // expiration time: 1 day
+    name: ''
   }));
 
 // Routes
