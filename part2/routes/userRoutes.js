@@ -70,12 +70,7 @@ router.post('/logout', (req, res) => {
       return res.status(500).json({ error: 'Logout failed' });
     }
     // Clear cookie data
-    res.clearCookie('connect.sid', {
-      path: '/',
-      httpOnly: true,
-      secure: false
-    });
-
+    res.clearCookie('connect.sid');
     res.json({ message: 'Logged out successfully' });
   });
 });
