@@ -59,7 +59,7 @@
           }
         }
 
-        
+
         async function applyToWalk(requestId) {
           try {
             const res = await fetch(`/api/walks/${requestId}/apply`, {
@@ -79,7 +79,7 @@
           }
         }
 
-        //get current user function
+        // Fetch the currently logged-in user (from session)
         async function getCurrentUser() {
         try {
           const res = await fetch('/api/users/me', {
