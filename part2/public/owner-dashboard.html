@@ -143,15 +143,24 @@
       }
         // Load dog function
         const myDogs = ref([]);
-        
+
         async function loadMyDogs() {
-          try {
-            const res = await fetch('/api/dogs/mine', { credentials: 'include' });
-            myDogs.value = await res.json();
-          } catch (err) {
-            error.value = 'Failed to load dogs';
+        try {
+          const res = await fetch('/api/dogs/mine', {
+            credentials: 'include'  // required for session cookie
+          });
+
+          if (!res.ok) {
+            const errData = await res.json();
+            throw new Error(errData.error || 'Error loading dogs');
           }
+
+          myDogs.value = await res.json();
+        } catch (err) {
+          error.value = 'Failed to load dogs';
+          console.error('loadMyDogs error:', err);
         }
+      }
 
         onMounted(() => {
           loadWalks();
