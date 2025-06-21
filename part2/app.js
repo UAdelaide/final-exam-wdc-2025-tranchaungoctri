@@ -15,7 +15,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false, // avoid storing empty session
     cookie: { maxAge: 86400000 }, // expiration time: 1 day
-    name: ''
+    name: 'TriCookie'
   }));
 
 // Routes
