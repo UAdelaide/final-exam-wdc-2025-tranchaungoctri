@@ -65,7 +65,7 @@ router.post('/login', async (req, res) => {
 // POST log out (ends session and erases cookie, return to login form)
 router.post('/logout', (req, res) => {
   // Destroy the session data on the server
-  req.session.destroy(err => {
+  req.session.destroy((err) => {
     if (err) {
       return res.status(500).json({ error: 'Logout failed' });
     }
