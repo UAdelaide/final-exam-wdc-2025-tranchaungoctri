@@ -106,13 +106,13 @@
         }
       }
 
-      onMounted(async () => {
-      const currentUser = await getCurrentUser();
-      if (currentUser) {
-        user.value = currentUser.id;
-        await loadWalkRequests();
-      }
-      });
+        onMounted(async () => {
+        const currentUser = await getCurrentUser();
+        if (currentUser) {
+          user.value = currentUser.id;
+          await loadWalkRequests();
+        }
+        });
 
         return {
           walks,
