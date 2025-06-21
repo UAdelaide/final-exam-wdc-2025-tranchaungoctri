@@ -76,6 +76,21 @@ router.post('/logout', (req, res) => {
   });
 });
 
-// GET
+// GET dog by owner
+router.get('/dogs/mine', (req, res) => {
+  if (!req.session.user || req.session.user.role !== 'owner') {
+    return res.status(403).json({ error: 'Not authorized' });
+  }
+
+  const ownerId = req.session.user.id;
+
+  db.query('SELECT dog_id, name FROM Dogs WHERE owner_id = ?', [ownerId])
+    .then(([rows]) => res.json(rows))
+    .catch((err) => {
+      console.error('Error fetching dogs:', err);
+      res.status(500).json({ error: 'Could not fetch dogs' });
+    });
+});
+
 
 module.exports = router;
