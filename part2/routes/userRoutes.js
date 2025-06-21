@@ -78,10 +78,6 @@ router.post('/logout', (req, res) => {
 
 // GET dog by owner
 router.get('/dogs/mine', (req, res) => {
-  if (!req.session.user || req.session.user.role !== 'owner') {
-    return res.status(403).json({ error: 'Not authorized' });
-  }
-
   const ownerId = req.session.user.id;
 
   db.query('SELECT dog_id, name FROM Dogs WHERE owner_id = ?', [ownerId])
@@ -91,6 +87,5 @@ router.get('/dogs/mine', (req, res) => {
       res.status(500).json({ error: 'Could not fetch dogs' });
     });
 });
-
 
 module.exports = router;
