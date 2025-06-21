@@ -81,6 +81,43 @@
         const dogs = ref([]);
         const loggedIn = ref(false);
 
+        // Function to fetch random dog image from Dog CEO API
+        async function getRandomDogImage() {
+          try {
+            const response = await fetch('https://dog.ceo/api/breeds/image/random');
+            const data = await response.json();
+            return data.message;
+          } catch (err) {
+            console.error('Error fetching dog image:', err);
+            return 'https://via.placeholder.com/100x80?text=No+Image';
+          }
+        }
+
+        // Load dogs function (for login page)
+        async function loadDogs() {
+          try {
+            const res = await fetch('/api/users/dogs');
+            if (!res.ok) {
+              const data = await res.json();
+              throw new Error(data.error || 'Failed to load dogs');
+            }
+            const dogsData = await res.json();
+
+            // Assign a random dog photo to each dog
+            const dogsWithImages = await Promise.all(dogsData.map(async dog => {
+              const image = await getRandomDogImage();
+              return {
+                ...dog,
+                image: image
+              };
+            });
+
+            dogs.value = dogsWithImages;
+          } catch (err) {
+            error.value = err.message;
+          }
+        }
+
         // Check if user is already logged in on page load (session)
         onMounted(async () => {
           try {
