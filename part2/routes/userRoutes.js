@@ -90,6 +90,31 @@ router.get('/dogs/mine', async (req, res) => {
   }
 });
 
-//
+// display table with dog
+// GET all dogs with random image
+router.get('/', async (req, res) => {
+  try {
+    const [rows] = await db.query(`
+      SELECT Dogs.name AS dog_name, Dogs.size, Users.username AS owner_username
+      FROM Dogs
+      JOIN Users ON Dogs.owner_id = Users.user_id
+    `);
+
+    // Fetch random image for each dog
+    const dogsWithPhotos = await Promise.all(rows.map(async (dog) => {
+      try {
+        const imgRes = await axios.get('https://dog.ceo/api/breeds/image/random');
+        return { ...dog, image: imgRes.data.message };
+      } catch {
+        return { ...dog, image: null }; // fallback if API fails
+      }
+    }));
+
+    res.json(dogsWithPhotos);
+  } catch (err) {
+    console.error('Error loading dogs:', err);
+    res.status(500).json({ error: 'Failed to fetch dogs' });
+  }
+});
 
 module.exports = router;
