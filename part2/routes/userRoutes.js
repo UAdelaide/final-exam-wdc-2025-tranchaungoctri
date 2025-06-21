@@ -46,7 +46,7 @@ router.post('/login', async (req, res) => {
     `, [username, password]);
 
     if (rows.length === 0) {
-      return res.status(401).json({ error: 'Unknown user' });
+      return res.status(401).json({ error: 'Unknown username or password' });
     }
 
     // Save user info in session after login
