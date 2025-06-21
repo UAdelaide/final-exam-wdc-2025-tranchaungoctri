@@ -135,9 +135,10 @@
           // fetch the list of dogs from backend API
           const res = await fetch('/api/users/dogs');
 
-          // Parse JSON into
+          // Parse JSON into array
           const dogsData = await res.json();
 
+          // For each dog, fetch a random image from the Dog CEO API
           const dogsWithImages = await Promise.all(dogsData.map(async (dog) => {
             try {
               const imgRes = await fetch('https://dog.ceo/api/breeds/image/random');
