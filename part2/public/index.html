@@ -128,6 +128,22 @@
           }
         }
 
+        //Load dog function
+        async function loadDogs() {
+          try {
+            const res = await fetch('/api/users/dogs'); // or '/api/dogs'
+            if (!res.ok) {
+              const data = await res.json();
+              throw new Error(data.error || 'Failed to load dogs');
+            }
+            dogs.value = await res.json();
+          } catch (err) {
+            error.value = err.message;
+          }
+        }
+
+        onMounted(loadDogs);
+
         // Return variables and functions
         return { username, password, error, login, dogs };
       },
