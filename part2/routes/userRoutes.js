@@ -75,7 +75,7 @@ router.post('/logout', (req, res) => {
   });
 });
 
-// GET dog by owner
+// GET dog by owner (/api/users/dogs/mine)
 router.get('/dogs/mine', async (req, res) => {
   if (!req.session.user || req.session.user.role !== 'owner') {
     return res.status(403).json({ error: 'Not authorized' });
