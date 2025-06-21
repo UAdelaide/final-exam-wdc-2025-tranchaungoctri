@@ -149,11 +149,9 @@
           const res = await fetch('/api/users/dogs/mine', {
           credentials: 'include'
         });
-
           myDogs.value = await res.json();
         } catch (err) {
           error.value = 'Failed to load dogs';
-          console.error('loadMyDogs error:', err);
         }
       }
 
