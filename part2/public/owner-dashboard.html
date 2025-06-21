@@ -148,10 +148,12 @@
         async function loadMyDogs() {
         try {
           const res = await fetch('/api/users/dogs/mine', {
-          credentials: 'include' //// Include cookies
+          credentials: 'include' // Include cookies
         });
+          // Store the list of dogs
           myDogs.value = await res.json();
         } catch (err) {
+          // If the fetch fails,
           error.value = 'Failed to load dogs';
         }
       }
