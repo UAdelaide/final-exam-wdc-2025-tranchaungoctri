@@ -91,19 +91,33 @@ router.get('/dogs/mine', async (req, res) => {
 });
 
 // GET all dogs with random photo (in index.html)
-router.get('/dogs', async (req, res) => {
+async function loadDogs() {
   try {
-    const [rows] = await db.query(`
-      SELECT Dogs.dog_id, Dogs.name AS dog_name, Dogs.size, Users.username AS owner_username
-      FROM Dogs
-      JOIN Users ON Dogs.owner_id = Users.user_id
-    `);
-    // Just send data, no photos
-    res.json(rows);
+    const res = await fetch('/api/users/dogs');
+    if (!res.ok) {
+      const data = await res.json();
+      throw new Error(data.error || 'Failed to load dogs');
+    }
+    const dogsData = await res.json();
+
+    // Fetch random images for all dogs
+    const dogsWithImages = await Promise.all(
+      dogsData.map(async (dog) => {
+        try {
+          const imgRes = await fetch('https://dog.ceo/api/breeds/image/random');
+          if (!imgRes.ok) throw new Error('Failed to fetch dog image');
+          const imgData = await imgRes.json();
+          return { ...dog, image: imgData.message }; // message contains the image URL
+        } catch {
+          return { ...dog, image: 'https://via.placeholder.com/100x80?text=No+Image' };
+        }
+      })
+    );
+
+    dogs.value = dogsWithImages;
   } catch (err) {
-    console.error('Error loading dogs:', err);
-    res.status(500).json({ error: 'Failed to fetch dogs' });
+    error.value = err.message;
   }
-});
+}
 
 module.exports = router;
