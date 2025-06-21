@@ -92,7 +92,7 @@ router.get('/dogs/mine', async (req, res) => {
 
 // GET all dogs with random image
 router.get('/', async (req, res) => {
-  //
+  //get information of dog
   try {
     const [rows] = await db.query(`
       SELECT Dogs.name AS dog_name, Dogs.size, Users.username AS owner_username
@@ -100,13 +100,12 @@ router.get('/', async (req, res) => {
       JOIN Users ON Dogs.owner_id = Users.user_id
     `);
 
-    // Fetch random image for each dog
+    // fetch random image for each dog
     const dogsWithPhotos = await Promise.all(rows.map(async (dog) => {
       try {
         const imgRes = await axios.get('https://dog.ceo/api/breeds/image/random');
         return { ...dog, image: imgRes.data.message };
       } catch {
-        return { ...dog, image: null }; // fallback if API fails
       }
     }));
 
