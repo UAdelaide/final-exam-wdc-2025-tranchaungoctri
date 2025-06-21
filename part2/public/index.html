@@ -31,7 +31,32 @@
       <button type="submit" class="btn btn-primary login-button">Log in</button>
     </form>
 
-    <!-- Dog -->
+    <!-- Dog tablet -->
+    <div v-else class="table-responsive">
+      <table class="table table-bordered table-hover align-middle">
+        <thead class="table-primary">
+          <tr>
+            <th scope="col">Dog ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Size</th>
+            <th scope="col">Owner</th>
+            <th scope="col">Photo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="dog in dogs" :key="dog.dog_id">
+            <td>{{ dog.dog_id }}</td>
+            <td>{{ dog.dog_name }}</td>
+            <td>{{ dog.size }}</td>
+            <td>{{ dog.owner_username }}</td>
+            <td>
+              <img :src="dog.image || 'https://via.placeholder.com/100x80?text=No+Image'"
+                   alt="Dog photo" class="img-fluid rounded" style="max-height: 80px;">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     <!-- Error message -->
     <div v-if="error" class="error-noti">{{ error }}</div>
