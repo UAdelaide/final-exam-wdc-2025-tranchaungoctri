@@ -62,7 +62,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// POST log out (ends session and erases cookie)
+// POST log out (ends session and erases cookie, return to login form)
 
 
 
