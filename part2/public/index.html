@@ -79,6 +79,7 @@
         const password = ref('');
         const error = ref('');
         const dogs = ref([]);
+        const loggedIn = ref(false);
 
         // Check if user is already logged in on page load (session)
         onMounted(async () => {
