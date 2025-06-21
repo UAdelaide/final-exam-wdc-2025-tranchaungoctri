@@ -142,13 +142,13 @@
         }
       }
 
-        // Load dog function (for owner)
+        // load the currently logged-in owner's dogs
         const myDogs = ref([]);
 
         async function loadMyDogs() {
         try {
           const res = await fetch('/api/users/dogs/mine', {
-          credentials: 'include'
+          credentials: 'include' //// Include cookies
         });
           myDogs.value = await res.json();
         } catch (err) {
