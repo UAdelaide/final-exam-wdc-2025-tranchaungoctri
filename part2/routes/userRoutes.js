@@ -106,6 +106,7 @@ router.get('/', async (req, res) => {
         const imgRes = await axios.get('https://dog.ceo/api/breeds/image/random');
         return { ...dog, image: imgRes.data.message };
       } catch {
+        return { ...dog, image: null }; // fallback if API fails
       }
     }));
 
