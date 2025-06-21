@@ -69,8 +69,8 @@ router.post('/logout', (req, res) => {
     if (err) {
       return res.status(500).json({ error: 'Logout failed' });
     }
-    // Clear cookies
-    res.clearCookie('connect.sid'); // Default cookie name used by express-session
+    // Clear cookie data
+    res.clearCookie('connect.sid');
     res.json({ message: 'Logged out successfully' });
   });
 });
