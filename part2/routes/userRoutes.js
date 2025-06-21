@@ -81,9 +81,6 @@ router.get('/dogs/mine', async (req, res) => {
   if (!req.session.user || req.session.user.role !== 'owner') {
     return res.status(403).json({ error: 'Not authorized' });
   }
-
-  console.log('Logged in user:', req.session.user);// debug
-
   const ownerId = req.session.user.id;
 
   try {
