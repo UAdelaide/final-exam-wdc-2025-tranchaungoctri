@@ -57,7 +57,8 @@ router.post('/login', async (req, res) => {
     };
 
     res.json({ message: 'Login successful', user: rows[0] });
-  } catch (error) {
+  } cres.status(500).json({ error: 'Login failed' });atch (error) {
+
   }
 });
 
