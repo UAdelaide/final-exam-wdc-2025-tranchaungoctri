@@ -35,7 +35,7 @@ router.get('/me', (req, res) => {
   res.json(req.session.user);
 });
 
-// POST login
+// POST log in
 router.post('/login', async (req, res) => {
   const { username, password } = req.body;
 
@@ -61,5 +61,8 @@ router.post('/login', async (req, res) => {
     res.status(500).json({ error: 'Login failed' });
   }
 });
+
+// POST log out
+
 
 module.exports = router;
