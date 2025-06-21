@@ -148,6 +148,7 @@
                 image: imgData.message
               };
             } catch {
+              // If fetching the image fails,
               return {
                 ...dog,
                 image: null
@@ -155,6 +156,7 @@
             }
           }));
 
+           // Update 
           dogs.value = dogsWithImages;
         } catch (err) {
           error.value = err.message;
